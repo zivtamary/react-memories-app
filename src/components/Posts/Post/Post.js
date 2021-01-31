@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import DeleteModal from './DeleteModal/DeleteModal';
 import {
@@ -16,6 +15,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { deletePost, likePost } from 'redux/actions/posts';
 
 import useStyles from './styles';
+import { formatDateFromNow } from 'utils/formatters';
 
 const Post = ({ post, setCurrentId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -49,7 +49,7 @@ const Post = ({ post, setCurrentId }) => {
         <div className={classes.overlay}>
           <Typography variant='h6'>{post.creator}</Typography>
           <Typography variant='body2'>
-            {moment(post.createdAt).fromNow()}
+            {formatDateFromNow(post.createdAt)}
           </Typography>
         </div>
         <div className={classes.overlay2}>
