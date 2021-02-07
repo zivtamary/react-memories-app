@@ -6,7 +6,7 @@ import FileBase from 'react-file-base64';
 import useStyles from './styles';
 import { createPost, updatePost } from 'redux/actions/posts';
 
-const Form = ({ currentId, setCurrentId }) => {
+const CreatePostForm = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: '',
     title: '',
@@ -126,4 +126,4 @@ const Form = ({ currentId, setCurrentId }) => {
   );
 };
 
-export default Form;
+export default CreatePostForm;

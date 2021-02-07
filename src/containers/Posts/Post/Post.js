@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import DeleteModal from './DeleteModal/DeleteModal';
+import DeleteModal from './DeletePostModal/DeletePostModal';
 import {
   Card,
   CardActions,
@@ -8,6 +8,8 @@ import {
   CardMedia,
   Button,
   Typography,
+  Menu,
+  MenuItem,
 } from '@material-ui/core/';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -19,6 +21,8 @@ import { formatDateFromNow } from 'utils/formatters';
 
 const Post = ({ post, setCurrentId }) => {
   const [showModal, setShowModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -35,6 +39,13 @@ const Post = ({ post, setCurrentId }) => {
     setShowModal(false);
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <Card className={classes.card}>
@@ -54,11 +65,27 @@ const Post = ({ post, setCurrentId }) => {
         </div>
         <div className={classes.overlay2}>
           <Button
+            aria-controls='simple-menu'
+            aria-haspopup='true'
             style={{ color: 'white' }}
             size='small'
-            onClick={() => setCurrentId(post._id)}>
+            onClick={handleClick}>
             <MoreHorizIcon fontSize='default' />
           </Button>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleCloseMenu}>
+            <MenuItem
+              onClick={() => {
+                setCurrentId(post._id);
+                handleCloseMenu();
+              }}>
+              Edit
+            </MenuItem>
+          </Menu>
         </div>
         <div className={classes.details}>
           <Typography variant='body2' color='textSecondary' component='h2'>
